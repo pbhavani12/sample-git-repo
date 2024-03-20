@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
+import { useAuth } from "../AuthContext";
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false); // State to manage visibility of password
   const [error, setError] = useState("");
+  const { isAuthenticated, login } = useAuth();
 
   const navigate = useNavigate();
 
@@ -37,7 +39,8 @@ const Login = ({ onLogin }) => {
       });
 
       if (response.ok) {
-        navigate("/addstudent"); // Redirect user on successful login
+        navigate("/Home2");
+        login();
       } else {
         setError("Login failed"); // Handle login failure
       }
@@ -49,7 +52,7 @@ const Login = ({ onLogin }) => {
   return (
     <div className="login-container">
       <h2>Login</h2>
-      <h3>User Name</h3>
+      
       <input
         type="text"
         placeholder="Username"

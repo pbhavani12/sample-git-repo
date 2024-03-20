@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./UpdateStudent.css";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
+
+
 
 const UpdateStudent = () => {
   const [studentId, setStudentId] = useState("");
@@ -10,6 +14,8 @@ const UpdateStudent = () => {
     gender: "",
     grade: "",
   });
+  const nav = useNavigate();
+  const { isAuthenticated, login } = useAuth();
 
   const handleChange = async (e) => {
     const { value } = e.target;
@@ -35,40 +41,45 @@ const UpdateStudent = () => {
       });
     }
   };
+  useEffect(() => {
+    if (!isAuthenticated) {
+      nav("/login");
+    }
+  }, [isAuthenticated, nav]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-    fetch(`http://localhost:8082/admin/students/${studentId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedStudent),
+  fetch(`http://localhost:8082/admin/students/${studentId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedStudent),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Student updated successfully:", data);
-        // Reset form
-        setStudentId("");
-        setUpdatedStudent({
-          name: "",
-          email: "",
-          age: "",
-          gender: "",
-          grade: "",
-        });
-        window.location.href = "/studentlist"; // Navigate to student list
-      })
-      .catch((error) => {
-        console.error("Error updating student:", error);
+    .then((data) => {
+      console.log("Student updated successfully:", data);
+      // Reset form
+      setStudentId("");
+      setUpdatedStudent({
+        name: "",
+        email: "",
+        age: "",
+        gender: "",
+        grade: "",
       });
-  };
+      nav("/studentlist"); // Navigate to student list using the navigation hook
+    })
+    .catch((error) => {
+      console.error("Error updating student:", error);
+    });
+};
 
   return (
     <div className="update-student-container">

@@ -12,7 +12,8 @@
 }
 
 .nav-item {
-  float: left; /* Float the list items to the left */
+  float: left;
+  margin-right: 10px; /* Float the list items to the left */
 }
 
 .nav-link {

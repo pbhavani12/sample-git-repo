@@ -12,15 +12,11 @@ const About = () => {
         information.
       </p>
       <p>
-        This system helps administrators, teachers, and staff members maintain
+        This system helps teachers and staff members maintain
         accurate records of students, including their personal details, academic
         performance, and other relevant information.
       </p>
-      <p>
-        With the Student Management System, educational institutions can
-        streamline their administrative processes, enhance communication between
-        stakeholders, and ensure compliance with regulatory standards.
-      </p>
+      
     </div>
   );
 };

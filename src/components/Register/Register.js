@@ -7,9 +7,12 @@ const Register = ({ onRegister }) => {
   const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [formSubmitted, setFormSubmitted] = useState(false); // Track form submission
   const navigate = useNavigate();
 
   const handleRegisterClick = async () => {
+    setFormSubmitted(true); // Mark form as submitted
+
     // Validation checks
     if (!firstname || !lastname || !username || !password) {
       console.error("Please fill in all fields");
@@ -74,6 +77,9 @@ const Register = ({ onRegister }) => {
         onChange={(e) => setPassword(e.target.value)}
         className="input-field"
       />
+      {formSubmitted && (!firstname || !lastname || !username || !password) && (
+        <p className="error-message">All fields are mandatory</p>
+      )}
       <button onClick={handleRegisterClick} className="register-button">
         Register
       </button>

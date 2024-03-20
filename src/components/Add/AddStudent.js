@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AddStudent.css";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 const AddStudent = () => {
   const [student, setStudent] = useState({
@@ -9,6 +11,8 @@ const AddStudent = () => {
     gender: "",
     grade: "",
   });
+  const navigate = useNavigate(); // Use useNavigate hook for navigation
+  const { isAuthenticated, login } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,6 +21,12 @@ const AddStudent = () => {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,7 +54,7 @@ const AddStudent = () => {
           gender: "",
           grade: "",
         });
-        window.location.href = "/studentlist"; // Navigate to student list
+        navigate("/studentlist"); // Use navigate to go to student list page
       })
       .catch((error) => {
         console.error("Error creating student:", error);

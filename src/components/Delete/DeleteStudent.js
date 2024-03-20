@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./DeleteStudent.css";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 const DeleteStudent = () => {
   const [studentId, setStudentId] = useState("");
   const [studentDetails, setStudentDetails] = useState(null);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
   const [studentNotFound, setStudentNotFound] = useState(false);
+  const nav = useNavigate();
+  const { isAuthenticated, login } = useAuth();
 
   useEffect(() => {
     // Fetch student details when studentId changes
@@ -32,7 +36,18 @@ const DeleteStudent = () => {
           setStudentDetails(null);
         });
     }
+
+    // Cleanup function to reset delete success message
+    return () => {
+      setDeleteSuccess(false);
+    };
   }, [studentId]);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      nav("/login");
+    }
+  }, [isAuthenticated, nav]);
 
   const handleChange = (e) => {
     setStudentId(e.target.value);

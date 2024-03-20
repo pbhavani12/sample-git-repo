@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "./ViewStudentbyId.css";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
+
 
 const ViewStudentbyId = () => {
   const [id, setId] = useState(""); // State to store the entered ID
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const nav = useNavigate();
+  const { isAuthenticated, login } = useAuth();
 
   useEffect(() => {
     if (!id) return; // Don't fetch if ID is empty
@@ -32,6 +37,12 @@ const ViewStudentbyId = () => {
         setLoading(false); // Set loading state to false after data fetching is complete
       });
   }, [id]);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      nav("/login");
+    }
+  }, [isAuthenticated, nav]);
+
 
   const handleInputChange = (event) => {
     setId(event.target.value); // Update the ID state when input changes

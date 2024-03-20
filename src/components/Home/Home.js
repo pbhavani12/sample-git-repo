@@ -1,21 +1,20 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { FaSignInAlt } from "react-icons/fa"; // Importing the login icon
+import { FaSignInAlt, FaUserPlus } from "react-icons/fa"; // Importing the login and register icons
+import "./Home.css";
 
 const Home = () => {
   return (
-    <div>
+    <div className="home-container">
       <h2>Welcome to Student Management System</h2>
-      <p>This is the home page of the Student Management System.</p>
-      <p>Use the navigation above to manage students.</p>
-      {/* Link to the login page with the login icon */}
-      <p>
-        Don't have an account? <Link to="/register">Register</Link> |
-        <Link to="/login">
-          {" "}
-          <FaSignInAlt /> Login
+      {/* Links to the login and register pages */}
+      <div className="auth-links">
+        <Link to="/login" className="auth-link">
+          <FaSignInAlt /> Log In
         </Link>
-      </p>
+        <Link to="/register" className="auth-link">
+          <FaUserPlus /> Register
+        </Link>
+      </div>
     </div>
   );
 };

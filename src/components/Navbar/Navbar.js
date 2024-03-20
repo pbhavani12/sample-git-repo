@@ -1,8 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignInAlt } from "@fortawesome/free-solid-svg-icons"; 
-import { faHome } from "@fortawesome/free-solid-svg-icons";// Importing the login icon
+import {
+  faHome,
+  faInfoCircle,
+  faEnvelope,
+  faSignOutAlt,
+} from "@fortawesome/free-solid-svg-icons"; // Importing the additional icons
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -12,6 +16,7 @@ const Navbar = () => {
         <li className="nav-item">
           <Link to="/" className="nav-link">
             <FontAwesomeIcon icon={faHome} /> {/* Home icon */}
+            Home
           </Link>
         </li>
         <li className="nav-item">
@@ -39,16 +44,21 @@ const Navbar = () => {
             View Student by ID
           </Link>
         </li>
+        {/* New navigation items */}
         <li className="nav-item">
-          <Link to="/login" className="nav-link">
-            Login <FontAwesomeIcon icon={faSignInAlt} /> {/* Login icon */}
+          <Link to="/about" className="nav-link">
+            <FontAwesomeIcon icon={faInfoCircle} /> {/* About icon */}
+            About
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/register" className="nav-link">
-            Register
+          <Link to="/contact" className="nav-link">
+            <FontAwesomeIcon icon={faEnvelope} /> {/* Contact icon */}
+            Contact
           </Link>
         </li>
+        
+        
       </ul>
     </nav>
   );

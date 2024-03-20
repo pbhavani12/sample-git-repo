@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./StudentList.css";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
-
-  
+   const { isAuthenticated } = useAuth();
+   const nav = useNavigate();
 
   const fetchStudents = async () => {
     try {
@@ -22,6 +24,11 @@ const StudentList = () => {
   useEffect(() => {
     fetchStudents();
   }, []);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      nav("/login");
+    }
+  }, [isAuthenticated, nav]);
 
   return (
     <div className="student-list-container">
